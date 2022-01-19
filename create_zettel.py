@@ -34,12 +34,14 @@ def main():
     zetteldir = create_zettel_dir()
     filesdir = pathlib.Path("files.md")
     zid = 10000000000000
-    for _ in range(2):
+    for _ in range(1):
         for fpath in filesdir.iterdir():
             if not fpath.is_file():
                 continue
-            copy_zettel(fpath, zetteldir.joinpath(str(zid) + " " + fpath.name))
-            make_meta(zetteldir.joinpath(str(zid) + " " + fpath.stem + ".meta"), fpath.stem)
+            stem = fpath.stem.replace('.', '_')
+            name = stem + fpath.suffix
+            copy_zettel(fpath, zetteldir.joinpath(str(zid) + " " + name))
+            make_meta(zetteldir.joinpath(str(zid) + " " + stem), stem)
             zid += 100
 
 if __name__ == '__main__':
